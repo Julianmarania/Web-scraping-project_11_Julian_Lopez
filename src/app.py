@@ -41,21 +41,10 @@ for i in range(0, len(cell_text), 3):
 # Creo un DataFrame con los datos organizados.
 df = pd.DataFrame(data, columns=['Year', 'Revenue', 'Change'])
 
-
-# Limpio la columna revenue.
-df['Revenue'] = df['Revenue'].replace({'$': '', ' B': '', ',': ''}, regex=True)
-
-# Convierto la columna revenue a tipo float.
-df['Revenue'] = df['Revenue'].astype(float)
-
-# Limpio la columna change.
-df['Change'] = df['Change'].replace({'%': '', ',': '', 'tenog': '0'}, regex=True)
-
-# Convierto la columna change a tipo numérico.
-df['Change'] = pd.to_numeric(df['Change'], errors='coerce')
-
-# Elimino las filas con valores NaN.
+# Limpieza del df y cenvertirlo a float. 
+df = df.replace(r"[^0-9.]", "", regex=True).apply(pd.to_numeric)
 df_final = df.dropna()
+
 
 
 
@@ -90,7 +79,7 @@ plt.xlabel("Year")
 plt.ylabel("Revenue (Billions)")
 plt.legend()
 plt.grid(linestyle='--', alpha=0.7)
-plt.gca().invert_xaxis() # Con esto invierto el eje del gráfico porque estan los datos al revés para mi gusto. 
+# plt.gca().invert_xaxis() # Con esto invierto el eje del gráfico porque estan los datos al revés para mi gusto. 
 plt.colorbar(scatter, label='Change (%)') # Esta es la funcion de plt que hace la barra lateral y me pide la variable que inicializamos antes. 
 plt.show()
 
@@ -113,7 +102,7 @@ plt.scatter([], [], color='red', label='Change >= 50%')
 plt.legend(title='Change Categories')
 
 plt.grid(linestyle='--', alpha=0.7)
-plt.gca().invert_xaxis() # Con esto invierto el eje del gráfico porque estan los datos al revés para mi gusto. 
+# plt.gca().invert_xaxis() # Con esto invierto el eje del gráfico porque estan los datos al revés para mi gusto. 
 plt.show()
 
 
@@ -126,5 +115,5 @@ plt.title("Line plot: Year vs Revenue")
 plt.xlabel("Year")
 plt.ylabel("Revenue (Billions)")
 plt.grid(linestyle='--', alpha=0.7)
-plt.gca().invert_xaxis() # Con esto invierto el eje del gráfico porque estan los datos al revés para mi gusto. 
+# plt.gca().invert_xaxis() # Con esto invierto el eje del gráfico porque estan los datos al revés para mi gusto. 
 plt.show()
